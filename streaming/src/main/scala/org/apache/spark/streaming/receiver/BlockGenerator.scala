@@ -158,6 +158,7 @@ private[streaming] class BlockGenerator(
    * Push a single data item into the buffer.
    */
   def addData(data: Any): Unit = {
+    logInfo(s"B===============addData $data")
     if (state == Active) {
       waitToPush()
       synchronized {
@@ -234,16 +235,20 @@ private[streaming] class BlockGenerator(
       var newBlock: Block = null
       synchronized {
         if (currentBuffer.nonEmpty) {
+          logInfo("C===============newBlockBuffer")
           val newBlockBuffer = currentBuffer
           currentBuffer = new ArrayBuffer[Any]
           val blockId = StreamBlockId(receiverId, time - blockIntervalMs)
           listener.onGenerateBlock(blockId)
           newBlock = new Block(blockId, newBlockBuffer)
+          logInfo(s"D===============newBlock ${blockId}")
         }
       }
 
       if (newBlock != null) {
+        logInfo("E1===============blocksForPushing start")
         blocksForPushing.put(newBlock)  // put is blocking when queue is full
+        logInfo("E2===============blocksForPushing finish")
       }
     } catch {
       case ie: InterruptedException =>
@@ -264,6 +269,7 @@ private[streaming] class BlockGenerator(
     try {
       // While blocks are being generated, keep polling for to-be-pushed blocks and push them.
       while (areBlocksBeingGenerated) {
+        logInfo("F===============start pushing block to block manager")
         Option(blocksForPushing.poll(10, TimeUnit.MILLISECONDS)) match {
           case Some(block) => pushBlock(block)
           case None =>
@@ -294,6 +300,7 @@ private[streaming] class BlockGenerator(
 
   private def pushBlock(block: Block) {
     listener.onPushBlock(block.id, block.buffer)
-    logInfo("Pushed block " + block.id)
+    logInfo("F===============Pushed block " + block.id)
+    //logInfo("Pushed block " + block.id)
   }
 }

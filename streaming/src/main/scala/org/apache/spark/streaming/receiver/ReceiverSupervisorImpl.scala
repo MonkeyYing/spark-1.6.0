@@ -117,6 +117,7 @@ private[streaming] class ReceiverSupervisorImpl(
   /** Push a single record of received data into block generator. */
   def pushSingle(data: Any) {
     defaultBlockGenerator.addData(data)
+    logInfo(s"B================add $data finish")
   }
 
   /** Store an ArrayBuffer of received data as a data block into Spark's memory. */
@@ -155,10 +156,12 @@ private[streaming] class ReceiverSupervisorImpl(
     val blockId = blockIdOption.getOrElse(nextBlockId)
     val time = System.currentTimeMillis
     val blockStoreResult = receivedBlockHandler.storeBlock(blockId, receivedBlock)
+    logInfo(s"F===============Pushed block $blockId in ${(System.currentTimeMillis - time)} ms")
     logDebug(s"Pushed block $blockId in ${(System.currentTimeMillis - time)} ms")
     val numRecords = blockStoreResult.numRecords
     val blockInfo = ReceivedBlockInfo(streamId, numRecords, metadataOption, blockStoreResult)
     trackerEndpoint.askWithRetry[Boolean](AddBlock(blockInfo))
+    logInfo(s"G===============Reported block $blockId to trackerEndpoint ")
     logDebug(s"Reported block $blockId")
   }
 

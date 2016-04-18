@@ -47,8 +47,10 @@ class ForEachDStream[T: ClassTag] (
     parent.getOrCompute(time) match {
       case Some(rdd) =>
         val jobFunc = () => createRDDWithLocalProperties(time, displayInnerRDDOps) {
+          logInfo(s"J2===============generate RDD $rdd")
           foreachFunc(rdd, time)
         }
+        logInfo(s"K1===============generate job")
         Some(new Job(time, jobFunc))
       case None => None
     }

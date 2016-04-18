@@ -120,6 +120,7 @@ class JobScheduler(val ssc: StreamingContext) extends Logging {
   }
 
   def submitJobSet(jobSet: JobSet) {
+    logInfo("L===============submitJobSet")
     if (jobSet.jobs.isEmpty) {
       logInfo("No jobs added for time " + jobSet.time)
     } else {
@@ -221,6 +222,7 @@ class JobScheduler(val ssc: StreamingContext) extends Logging {
           // scheduler, since we may need to write output to an existing directory during checkpoint
           // recovery; see SPARK-4835 for more details.
           PairRDDFunctions.disableOutputSpecValidation.withValue(true) {
+            logInfo("M===============run Job")
             job.run()
           }
           _eventLoop = eventLoop
