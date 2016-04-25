@@ -85,7 +85,7 @@ abstract class ReceiverInputDStream[T: ClassTag](ssc_ : StreamingContext)
         ssc.scheduler.inputInfoTracker.reportInfo(validTime, inputInfo)
 
         // Create the BlockRDD
-        logInfo("J1===============create BlockRDD start")
+        logInfo(s"J1===============create BlockRDD $blockInfos + $blockRDD start")
         createBlockRDD(validTime, blockInfos)
       }
     }

@@ -318,7 +318,7 @@ class ReceiverTracker(ssc: StreamingContext, skipReceiverLaunch: Boolean = false
 
   /** Add new blocks for the given stream */
   private def addBlock(receivedBlockInfo: ReceivedBlockInfo): Boolean = {
-    logInfo("H1===============add new block to receiverTracker")
+    logInfo(s"H===============add new block $receivedBlockInfo to receiverTracker")
     receivedBlockTracker.addBlock(receivedBlockInfo)
   }
 

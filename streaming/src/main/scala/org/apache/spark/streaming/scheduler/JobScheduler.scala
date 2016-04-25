@@ -120,12 +120,14 @@ class JobScheduler(val ssc: StreamingContext) extends Logging {
   }
 
   def submitJobSet(jobSet: JobSet) {
-    logInfo("L===============submitJobSet")
+    logInfo(s"L===============submitJobSet $jobSet")
     if (jobSet.jobs.isEmpty) {
       logInfo("No jobs added for time " + jobSet.time)
     } else {
       listenerBus.post(StreamingListenerBatchSubmitted(jobSet.toBatchInfo))
+      logInfo(s"L1==========put jobset $jobSet to jobSets")
       jobSets.put(jobSet.time, jobSet)
+      logInfo(s"L2=========jobSet $jobSet execute ")
       jobSet.jobs.foreach(job => jobExecutor.execute(new JobHandler(job)))
       logInfo("Added jobs for time " + jobSet.time)
     }
@@ -222,7 +224,7 @@ class JobScheduler(val ssc: StreamingContext) extends Logging {
           // scheduler, since we may need to write output to an existing directory during checkpoint
           // recovery; see SPARK-4835 for more details.
           PairRDDFunctions.disableOutputSpecValidation.withValue(true) {
-            logInfo("M===============run Job")
+            logInfo(s"M===============run Job $job")
             job.run()
           }
           _eventLoop = eventLoop

@@ -235,20 +235,20 @@ private[streaming] class BlockGenerator(
       var newBlock: Block = null
       synchronized {
         if (currentBuffer.nonEmpty) {
-          logInfo("C===============newBlockBuffer")
+          logInfo(s"C===============newBlockBuffer $currentBuffer")
           val newBlockBuffer = currentBuffer
           currentBuffer = new ArrayBuffer[Any]
           val blockId = StreamBlockId(receiverId, time - blockIntervalMs)
           listener.onGenerateBlock(blockId)
           newBlock = new Block(blockId, newBlockBuffer)
-          logInfo(s"D===============newBlock ${blockId}")
+          logInfo(s"D===============newBlock ${blockId} + newBlockBuffer $newBlockBuffer")
         }
       }
 
       if (newBlock != null) {
-        logInfo("E1===============blocksForPushing start")
+        logInfo(s"E===============blocksForPushing newBlock $newBlock &id ${newBlock.id} start")
         blocksForPushing.put(newBlock)  // put is blocking when queue is full
-        logInfo("E2===============blocksForPushing finish")
+        logInfo(s"E===============blocksForPushing ${newBlock.id} finish")
       }
     } catch {
       case ie: InterruptedException =>
@@ -299,8 +299,9 @@ private[streaming] class BlockGenerator(
   }
 
   private def pushBlock(block: Block) {
+    logInfo(s"F1===============push block $block")
     listener.onPushBlock(block.id, block.buffer)
-    logInfo("F===============Pushed block " + block.id)
+    logInfo(s"F2===============Pushed block $block " + block.id)
     //logInfo("Pushed block " + block.id)
   }
 }
