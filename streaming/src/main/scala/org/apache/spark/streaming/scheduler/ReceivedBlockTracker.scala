@@ -88,9 +88,9 @@ private[streaming] class ReceivedBlockTracker(
       if (writeResult) {
         synchronized {
           getReceivedBlockQueue(receivedBlockInfo.streamId) += receivedBlockInfo
-          logInfo(s"H1=========add receivedBlockInfo $receivedBlockInfo to getReceivedBlockQueue")
+          logInfo(s"H1=====add RBlkInfo $receivedBlockInfo to getReceivedBlockQueue")
         }
-        logInfo(s"H2===============stream " + receivedBlockInfo.streamId + s" received " +
+        logInfo(s"H2=====stream " + receivedBlockInfo.streamId + s" received " +
           s"block ${receivedBlockInfo.blockStoreResult.blockId}")
         logDebug(s"Stream ${receivedBlockInfo.streamId} received " +
           s"block ${receivedBlockInfo.blockStoreResult.blockId}")

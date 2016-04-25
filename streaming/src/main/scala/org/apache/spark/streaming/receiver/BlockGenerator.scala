@@ -235,20 +235,20 @@ private[streaming] class BlockGenerator(
       var newBlock: Block = null
       synchronized {
         if (currentBuffer.nonEmpty) {
-          logInfo(s"C===============newBlockBuffer $currentBuffer")
+          logInfo(s"C=====newBlockBuffer $currentBuffer")
           val newBlockBuffer = currentBuffer
           currentBuffer = new ArrayBuffer[Any]
           val blockId = StreamBlockId(receiverId, time - blockIntervalMs)
           listener.onGenerateBlock(blockId)
           newBlock = new Block(blockId, newBlockBuffer)
-          logInfo(s"D===============newBlock ${blockId} + newBlockBuffer $newBlockBuffer")
+          logInfo(s"D=====newBlock ${blockId} + newBlockBuffer $newBlockBuffer")
         }
       }
 
       if (newBlock != null) {
-        logInfo(s"E===============blocksForPushing newBlock $newBlock &id ${newBlock.id} start")
+        logInfo(s"E=====blocksForPushing newBlock $newBlock &id ${newBlock.id} start")
         blocksForPushing.put(newBlock)  // put is blocking when queue is full
-        logInfo(s"E===============blocksForPushing ${newBlock.id} finish")
+        logInfo(s"E=====blocksForPushing ${newBlock.id} finish")
       }
     } catch {
       case ie: InterruptedException =>
@@ -269,7 +269,7 @@ private[streaming] class BlockGenerator(
     try {
       // While blocks are being generated, keep polling for to-be-pushed blocks and push them.
       while (areBlocksBeingGenerated) {
-        logInfo("F===============start pushing block to block manager")
+        logInfo("F=====start pushing block to block manager")
         Option(blocksForPushing.poll(10, TimeUnit.MILLISECONDS)) match {
           case Some(block) => pushBlock(block)
           case None =>
@@ -299,9 +299,9 @@ private[streaming] class BlockGenerator(
   }
 
   private def pushBlock(block: Block) {
-    logInfo(s"F1===============push block $block")
+    logInfo(s"F1=====push block $block")
     listener.onPushBlock(block.id, block.buffer)
-    logInfo(s"F2===============Pushed block $block " + block.id)
+    logInfo(s"F2=====Pushed block $block " + block.id)
     //logInfo("Pushed block " + block.id)
   }
 }

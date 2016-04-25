@@ -77,7 +77,7 @@ class JobGenerator(jobScheduler: JobScheduler) extends Logging {
 
   /** Start generation of jobs */
   def start(): Unit = synchronized {
-    logInfo("H===============JobGenerator.start()")
+    logInfo("H=====JobGenerator.start()")
     if (eventLoop != null) return // generator has already been started
 
     // Call checkpointWriter here to initialize it before eventLoop uses it to avoid a deadlock.
