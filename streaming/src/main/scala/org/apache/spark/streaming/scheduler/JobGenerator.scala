@@ -77,7 +77,7 @@ class JobGenerator(jobScheduler: JobScheduler) extends Logging {
 
   /** Start generation of jobs */
   def start(): Unit = synchronized {
-    logInfo("H=====JobGenerator.start()")
+//    logInfo("H===JobGenerator.start()")
     if (eventLoop != null) return // generator has already been started
 
     // Call checkpointWriter here to initialize it before eventLoop uses it to avoid a deadlock.
@@ -245,7 +245,9 @@ class JobGenerator(jobScheduler: JobScheduler) extends Logging {
     // Update: This is probably redundant after threadlocal stuff in SparkEnv has been removed.
     SparkEnv.set(ssc.env)
     Try {
+      logInfo(s"M===block to batch $time ")
       jobScheduler.receiverTracker.allocateBlocksToBatch(time) // allocate received blocks to batch
+//      logInfo(s"L2===block to batch $time end")
       graph.generateJobs(time) // generate jobs using allocated block
     } match {
       case Success(jobs) =>

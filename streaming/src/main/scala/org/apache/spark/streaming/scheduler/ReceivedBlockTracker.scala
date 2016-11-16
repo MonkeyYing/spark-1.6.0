@@ -88,9 +88,9 @@ private[streaming] class ReceivedBlockTracker(
       if (writeResult) {
         synchronized {
           getReceivedBlockQueue(receivedBlockInfo.streamId) += receivedBlockInfo
-          logInfo(s"H1=====add RBlkInfo $receivedBlockInfo to getReceivedBlockQueue")
+          logInfo(s"J===add RBlkInfo $receivedBlockInfo to getRcvBlkQueue")
         }
-        logInfo(s"H2=====stream " + receivedBlockInfo.streamId + s" received " +
+        logInfo(s"K===stream " + receivedBlockInfo.streamId + s" received " +
           s"block ${receivedBlockInfo.blockStoreResult.blockId}")
         logDebug(s"Stream ${receivedBlockInfo.streamId} received " +
           s"block ${receivedBlockInfo.blockStoreResult.blockId}")
@@ -118,6 +118,7 @@ private[streaming] class ReceivedBlockTracker(
       val allocatedBlocks = AllocatedBlocks(streamIdToBlocks)
       if (writeToLog(BatchAllocationEvent(batchTime, allocatedBlocks))) {
         timeToAllocatedBlocks.put(batchTime, allocatedBlocks)
+        logInfo(s"N===blockToBatch $streamIds & $streamIdToBlocks")
         lastAllocatedBatchTime = batchTime
       } else {
         logInfo(s"Possibly processed batch $batchTime need to be processed again in WAL recovery")

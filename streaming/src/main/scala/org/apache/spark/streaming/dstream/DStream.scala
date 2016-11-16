@@ -445,6 +445,7 @@ abstract class DStream[T: ClassTag] (
           val emptyFunc = { (iterator: Iterator[T]) => {} }
           context.sparkContext.runJob(rdd, emptyFunc)
         }
+        logInfo(s"R===DStream generate job $rdd & $time start")
         Some(new Job(time, jobFunc))
       }
       case None => None

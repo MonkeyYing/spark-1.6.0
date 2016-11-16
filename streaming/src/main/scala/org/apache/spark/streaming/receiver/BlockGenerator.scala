@@ -19,12 +19,12 @@ package org.apache.spark.streaming.receiver
 
 import java.util.concurrent.{ArrayBlockingQueue, TimeUnit}
 
-import scala.collection.mutable.ArrayBuffer
-
-import org.apache.spark.{SparkException, Logging, SparkConf}
 import org.apache.spark.storage.StreamBlockId
 import org.apache.spark.streaming.util.RecurringTimer
 import org.apache.spark.util.{Clock, SystemClock}
+import org.apache.spark.{Logging, SparkConf, SparkException}
+
+import scala.collection.mutable.ArrayBuffer
 
 /** Listener object for BlockGenerator events */
 private[streaming] trait BlockGeneratorListener {
@@ -158,7 +158,7 @@ private[streaming] class BlockGenerator(
    * Push a single data item into the buffer.
    */
   def addData(data: Any): Unit = {
-    logInfo(s"B===============addData $data")
+    logInfo(s"A===addData $data")
     if (state == Active) {
       waitToPush()
       synchronized {
@@ -235,20 +235,20 @@ private[streaming] class BlockGenerator(
       var newBlock: Block = null
       synchronized {
         if (currentBuffer.nonEmpty) {
-          logInfo(s"C=====newBlockBuffer $currentBuffer")
+          logInfo(s"C===newBlockBuffer $currentBuffer ")
           val newBlockBuffer = currentBuffer
           currentBuffer = new ArrayBuffer[Any]
           val blockId = StreamBlockId(receiverId, time - blockIntervalMs)
           listener.onGenerateBlock(blockId)
           newBlock = new Block(blockId, newBlockBuffer)
-          logInfo(s"D=====newBlock ${blockId} + newBlockBuffer $newBlockBuffer")
+          logInfo(s"D===newBlock ${blockId} + newBlockBuffer $newBlockBuffer")
         }
       }
 
       if (newBlock != null) {
-        logInfo(s"E=====blocksForPushing newBlock $newBlock &id ${newBlock.id} start")
+        logInfo(s"E===blocksForPushing newBlockId ${newBlock.id} start")
         blocksForPushing.put(newBlock)  // put is blocking when queue is full
-        logInfo(s"E=====blocksForPushing ${newBlock.id} finish")
+        logInfo(s"F===blocksForPushing ${newBlock.id} finish")
       }
     } catch {
       case ie: InterruptedException =>
@@ -269,7 +269,7 @@ private[streaming] class BlockGenerator(
     try {
       // While blocks are being generated, keep polling for to-be-pushed blocks and push them.
       while (areBlocksBeingGenerated) {
-        logInfo("F=====start pushing block to block manager")
+        logInfo("G===start pushing block to block manager")
         Option(blocksForPushing.poll(10, TimeUnit.MILLISECONDS)) match {
           case Some(block) => pushBlock(block)
           case None =>
@@ -299,9 +299,9 @@ private[streaming] class BlockGenerator(
   }
 
   private def pushBlock(block: Block) {
-    logInfo(s"F1=====push block $block")
+    logInfo("H===push block " + block.id)
     listener.onPushBlock(block.id, block.buffer)
-    logInfo(s"F2=====Pushed block $block " + block.id)
+//    logInfo(s"F2===Pushed block " + block.id)
     //logInfo("Pushed block " + block.id)
   }
 }
