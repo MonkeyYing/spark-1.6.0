@@ -231,17 +231,18 @@ private[streaming] class BlockGenerator(
 
   /** Change the buffer to which single records are added to. */
   private def updateCurrentBuffer(time: Long): Unit = {
+    logInfo("b===clock:update current buffer")
     try {
       var newBlock: Block = null
       synchronized {
         if (currentBuffer.nonEmpty) {
-          logInfo(s"C===newBlockBuffer $currentBuffer ")
+          logInfo(s"C===newBlockBuffer " + currentBuffer.size)
           val newBlockBuffer = currentBuffer
           currentBuffer = new ArrayBuffer[Any]
           val blockId = StreamBlockId(receiverId, time - blockIntervalMs)
           listener.onGenerateBlock(blockId)
           newBlock = new Block(blockId, newBlockBuffer)
-          logInfo(s"D===newBlock ${blockId} + newBlockBuffer $newBlockBuffer")
+          logInfo(s"D===newBlock ${blockId} + newBlockBuffer " + newBlockBuffer.size)
         }
       }
 
@@ -269,7 +270,7 @@ private[streaming] class BlockGenerator(
     try {
       // While blocks are being generated, keep polling for to-be-pushed blocks and push them.
       while (areBlocksBeingGenerated) {
-        logInfo("G===start pushing block to block manager")
+        logInfo("G===start pushing block to block manager" + blocksForPushing.size())
         Option(blocksForPushing.poll(10, TimeUnit.MILLISECONDS)) match {
           case Some(block) => pushBlock(block)
           case None =>
@@ -302,6 +303,6 @@ private[streaming] class BlockGenerator(
     logInfo("H===push block " + block.id)
     listener.onPushBlock(block.id, block.buffer)
 //    logInfo(s"F2===Pushed block " + block.id)
-    //logInfo("Pushed block " + block.id)
+    logInfo("Pushed block " + block.id)
   }
 }

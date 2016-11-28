@@ -159,7 +159,7 @@ private[streaming] class ReceiverSupervisorImpl(
     logInfo(s"I===Pushed block $blockId in ${(System.currentTimeMillis - time)} ms")
     logDebug(s"Pushed block $blockId in ${(System.currentTimeMillis - time)} ms")
     val numRecords = blockStoreResult.numRecords
-//    logInfo(s"G1===report block $blockId to trackerEndpoint")
+    logInfo(s"L0===report block $blockId to trackerEndpoint")
     val blockInfo = ReceivedBlockInfo(streamId, numRecords, metadataOption, blockStoreResult)
     trackerEndpoint.askWithRetry[Boolean](AddBlock(blockInfo))
     logInfo(s"L===Reported block $blockId & streamId $streamId to trackerEndpoint ")

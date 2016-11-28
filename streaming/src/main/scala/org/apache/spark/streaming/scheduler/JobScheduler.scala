@@ -130,7 +130,7 @@ class JobScheduler(val ssc: StreamingContext) extends Logging {
 //      logInfo(s"M2===jobSet $jobSet execute ")
       jobSet.jobs.foreach(job => jobExecutor.execute(new JobHandler(job)))
       logInfo("Added jobs for time " + jobSet.time)
-      logInfo(s"U===Added jobs fot time $jobSet" + jobSet.time)
+      logInfo(s"U===Added jobs fot time $jobSet" )
     }
   }
 
