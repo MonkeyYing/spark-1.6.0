@@ -158,7 +158,7 @@ private[streaming] class BlockGenerator(
    * Push a single data item into the buffer.
    */
   def addData(data: Any): Unit = {
-    logInfo(s"A===addData $data")
+//    logInfo(s"A===addData $data")
     if (state == Active) {
       waitToPush()
       synchronized {
@@ -231,7 +231,7 @@ private[streaming] class BlockGenerator(
 
   /** Change the buffer to which single records are added to. */
   private def updateCurrentBuffer(time: Long): Unit = {
-    logInfo("b===clock:update current buffer")
+//    logInfo("b===clock:update current buffer")
     try {
       var newBlock: Block = null
       synchronized {
@@ -247,7 +247,7 @@ private[streaming] class BlockGenerator(
       }
 
       if (newBlock != null) {
-        logInfo(s"E===blocksForPushing newBlockId ${newBlock.id} start")
+//        logInfo(s"E===blocksForPushing newBlockId ${newBlock.id} start")
         blocksForPushing.put(newBlock)  // put is blocking when queue is full
         logInfo(s"F===blocksForPushing ${newBlock.id} finish")
       }
@@ -300,7 +300,7 @@ private[streaming] class BlockGenerator(
   }
 
   private def pushBlock(block: Block) {
-    logInfo("H===push block " + block.id)
+//    logInfo("H===push block " + block.id)
     listener.onPushBlock(block.id, block.buffer)
 //    logInfo(s"F2===Pushed block " + block.id)
     logInfo("Pushed block " + block.id)

@@ -120,7 +120,7 @@ class JobScheduler(val ssc: StreamingContext) extends Logging {
   }
 
   def submitJobSet(jobSet: JobSet) {
-    logInfo(s"T===submitJobSet $jobSet")
+//    logInfo(s"T===submitJobSet $jobSet")
     if (jobSet.jobs.isEmpty) {
       logInfo("No jobs added for time " + jobSet.time)
     } else {

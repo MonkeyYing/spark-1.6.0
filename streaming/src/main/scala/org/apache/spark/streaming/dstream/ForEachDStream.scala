@@ -50,7 +50,7 @@ class ForEachDStream[T: ClassTag] (
 //          logInfo(s"J2===generate RDD $rdd")
           foreachFunc(rdd, time)
         }
-        logInfo(s"R===ForEachDStream generate job $rdd & $time start")
+//        logInfo(s"R===ForEachDStream generate job $rdd & $time start")
         Some(new Job(time, jobFunc))
       case None => None
     }
