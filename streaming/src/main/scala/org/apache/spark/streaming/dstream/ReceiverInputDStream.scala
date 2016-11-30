@@ -86,9 +86,9 @@ abstract class ReceiverInputDStream[T: ClassTag](ssc_ : StreamingContext)
 
         // Create the BlockRDD
 //        logInfo(s"P===create BlkRDD $id & + $blockInfos start")
-        val createBlockRDD2=createBlockRDD(validTime, blockInfos)
+        val createBlockRDDTwo = createBlockRDD(validTime, blockInfos)
         logInfo(s"Q===create BlkRDD $id & + ${blockInfos.length} + $blockInfos finish")
-        createBlockRDD2
+        createBlockRDDTwo
       }
     }
     Some(blockRDD)
