@@ -225,7 +225,7 @@ class JobScheduler(val ssc: StreamingContext) extends Logging {
           // scheduler, since we may need to write output to an existing directory during checkpoint
           // recovery; see SPARK-4835 for more details.
           PairRDDFunctions.disableOutputSpecValidation.withValue(true) {
-            logInfo(s"V===run Job $job")
+//            logInfo(s"V===run Job $job")
             job.run()
           }
           _eventLoop = eventLoop

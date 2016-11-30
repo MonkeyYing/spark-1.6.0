@@ -91,7 +91,7 @@ private[streaming] class ReceivedBlockTracker(
 //          logInfo(s"J===add RBlkInfo $receivedBlockInfo to getRcvBlkQueue")
         }
 //        logInfo(s"K===stream " + receivedBlockInfo.streamId + s" received " +
-          s"block ${receivedBlockInfo.blockStoreResult.blockId}")
+//          s"block ${receivedBlockInfo.blockStoreResult.blockId}")
         logDebug(s"Stream ${receivedBlockInfo.streamId} received " +
           s"block ${receivedBlockInfo.blockStoreResult.blockId}")
       } else {
