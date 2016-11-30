@@ -263,6 +263,7 @@ class ReliableKafkaReceiver[
         try {
           val streamIterator = stream.iterator()
           while (streamIterator.hasNext) {
+            logInfo(s"x===kafka stream has next data")
             storeMessageAndMetadata(streamIterator.next)
           }
         } catch {
