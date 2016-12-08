@@ -127,8 +127,10 @@ class KafkaReceiver[
   private class MessageHandler(stream: KafkaStream[K, V])
     extends Runnable {
     def run() {
+      logInfo("X1===kafka input run test.")
       logInfo("Starting MessageHandler.")
       try {
+        logInfo("X2===kafka input try test.")
         val streamIterator = stream.iterator()
         while (streamIterator.hasNext()) {
 //          logInfo(s"X===kafka stream has next data")
