@@ -128,7 +128,7 @@ class KafkaReceiver[
     extends Runnable {
     def run() {
       logInfo("X1===kafka input run test.")
-      logInfo("Starting MessageHandler.")
+      logInfo("Starting MessageHandler.  test")
       try {
         logInfo("X2===kafka input try test.")
         val streamIterator = stream.iterator()
