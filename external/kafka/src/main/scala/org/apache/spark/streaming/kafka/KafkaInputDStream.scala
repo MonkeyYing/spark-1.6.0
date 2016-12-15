@@ -87,7 +87,7 @@ class KafkaReceiver[
 
   def onStart() {
 
-    logInfo("Starting Kafka Consumer Stream with group: " + kafkaParams("group.id"))
+    logInfo("test Starting Kafka Consumer Stream with group: " + kafkaParams("group.id"))
 
     // Kafka connection properties
     val props = new Properties()
@@ -95,10 +95,10 @@ class KafkaReceiver[
 
     val zkConnect = kafkaParams("zookeeper.connect")
     // Create the connection to the cluster
-    logInfo("Connecting to Zookeeper: " + zkConnect)
+    logInfo("test Connecting to Zookeeper: " + zkConnect)
     val consumerConfig = new ConsumerConfig(props)
     consumerConnector = Consumer.create(consumerConfig)
-    logInfo("Connected to " + zkConnect)
+    logInfo("test Connected to " + zkConnect)
 
     val keyDecoder = classTag[U].runtimeClass.getConstructor(classOf[VerifiableProperties])
       .newInstance(consumerConfig.props)
@@ -117,6 +117,7 @@ class KafkaReceiver[
       // Start the messages handler for each partition
       topicMessageStreams.values.foreach { streams =>
         streams.foreach { stream => executorPool.submit(new MessageHandler(stream)) }
+        logInfo("test start messages handler for each partition")
       }
     } finally {
       executorPool.shutdown() // Just causes threads to terminate after work is done
@@ -126,6 +127,7 @@ class KafkaReceiver[
   // Handles Kafka messages
   private class MessageHandler(stream: KafkaStream[K, V])
     extends Runnable {
+    logInfo("test Runnable")
     def run() {
       logInfo("X1===kafka input run test.")
       logInfo("Starting MessageHandler.  test")

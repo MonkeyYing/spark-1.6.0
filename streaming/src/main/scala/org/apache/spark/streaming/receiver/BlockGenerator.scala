@@ -270,7 +270,7 @@ private[streaming] class BlockGenerator(
     try {
       // While blocks are being generated, keep polling for to-be-pushed blocks and push them.
       while (areBlocksBeingGenerated) {
-        logInfo("G===start pushing block to block manager" + blocksForPushing.size())
+        logInfo("G===start pushing block to block manager " + blocksForPushing.size())
         Option(blocksForPushing.poll(10, TimeUnit.MILLISECONDS)) match {
           case Some(block) => pushBlock(block)
           case None =>
