@@ -54,8 +54,8 @@
       <file leaf-file-name="KafkaInputDStream.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/external/kafka/src/main/scala/org/apache/spark/streaming/kafka/KafkaInputDStream.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3173484">
-              <caret line="128" column="15" selection-start-line="128" selection-start-column="15" selection-end-line="128" selection-end-column="15" />
+            <state vertical-scroll-proportion="0.53455573">
+              <caret line="129" column="44" selection-start-line="129" selection-start-column="44" selection-end-line="129" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -1282,8 +1282,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/external/kafka/src/main/scala/org/apache/spark/streaming/kafka/KafkaInputDStream.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3173484">
-          <caret line="128" column="15" selection-start-line="128" selection-start-column="15" selection-end-line="128" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.53455573">
+          <caret line="129" column="44" selection-start-line="129" selection-start-column="44" selection-end-line="129" selection-end-column="44" />
           <folding />
         </state>
       </provider>
