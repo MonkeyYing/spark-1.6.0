@@ -117,7 +117,6 @@ class KafkaReceiver[
       // Start the messages handler for each partition
       topicMessageStreams.values.foreach { streams =>
         streams.foreach { stream => executorPool.submit(new MessageHandler(stream)) }
-        logInfo("start messages handler for each partition")
       }
     } finally {
       executorPool.shutdown() // Just causes threads to terminate after work is done
