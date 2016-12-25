@@ -117,7 +117,7 @@ private[streaming] class ReceiverSupervisorImpl(
   /** Push a single record of received data into block generator. */
   def pushSingle(data: Any) {
     defaultBlockGenerator.addData(data)
-    logInfo(s"B===add $data finish")
+//    logInfo(s"B===add $data finish")
   }
 
   /** Store an ArrayBuffer of received data as a data block into Spark's memory. */
